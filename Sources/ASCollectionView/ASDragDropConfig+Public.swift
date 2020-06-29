@@ -17,6 +17,17 @@ public extension ASDragDropConfig
 		ASDragDropConfig()
 	}
 
+    func enableReorderSelective(canDragItem: ((_ indexPath: IndexPath) -> Bool)? = nil, canDropHere: ((_ indexPath: IndexPath) -> Bool)? = nil) -> Self
+    {
+        var this = self
+        this.dragEnabled = true
+        this.dropEnabled = true
+        this.reorderingEnabled = true
+        this.canDragItem = canDragItem
+        this.canDropHere = canDropHere
+        return this
+    }
+    
 	func enableReordering(shouldMoveItem: ((_ sourceIndexPath: IndexPath, _ destinationIndexPath: IndexPath) -> Bool)? = nil) -> Self
 	{
 		var this = self
