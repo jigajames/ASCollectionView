@@ -33,6 +33,9 @@ internal protocol ASSectionDataSourceProtocol
 	func shouldSelect(_ indexPath: IndexPath) -> Bool
 	func shouldDeselect(_ indexPath: IndexPath) -> Bool
 
+    func canDragItem(for indexPath: IndexPath) -> Bool
+    func canDropHere(for indexPath: IndexPath) -> Bool
+    
 	var dragEnabled: Bool { get }
 	var dropEnabled: Bool { get }
 	var reorderingEnabled: Bool { get }
@@ -49,6 +52,7 @@ protocol ASDataSourceConfigurableCell
 @available(iOS 13.0, *)
 internal struct ASSectionDataSource<DataCollection: RandomAccessCollection, DataID, Content, Container>: ASSectionDataSourceProtocol where DataID: Hashable, Content: View, Container: View, DataCollection.Index == Int
 {
+
 	typealias Data = DataCollection.Element
 	var data: DataCollection
 	var dataIDKeyPath: KeyPath<Data, DataID>
@@ -73,6 +77,14 @@ internal struct ASSectionDataSource<DataCollection: RandomAccessCollection, Data
 	var reorderingEnabled: Bool { dragDropConfig.reorderingEnabled }
 
 	var endIndex: Int { data.endIndex }
+    
+    func canDragItem(for indexPath: IndexPath) -> Bool {
+        dragDropConfig.canDragItem?(indexPath) ?? true
+    }
+    
+    func canDropHere(for indexPath: IndexPath) -> Bool {
+        dragDropConfig.canDropHere?(indexPath) ?? true
+    }
 
 	func getIndex(of itemID: ASCollectionViewItemUniqueID) -> Int?
 	{

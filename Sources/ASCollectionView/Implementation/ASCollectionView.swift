@@ -699,6 +699,7 @@ public struct ASCollectionView<SectionID: Hashable>: UIViewControllerRepresentab
 		func canDrop(at indexPath: IndexPath) -> Bool
 		{
 			guard !indexPath.isEmpty else { return false }
+            guard parent.sections[safe: indexPath.section]?.dataSource.canDropHere(for: indexPath) ?? false else { return false }
 			return parent.sections[safe: indexPath.section]?.dataSource.dropEnabled ?? false
 		}
 
@@ -706,7 +707,7 @@ public struct ASCollectionView<SectionID: Hashable>: UIViewControllerRepresentab
 		{
 			guard !indexPath.isEmpty else { return [] }
             
-            print("itemsForBeginning session")
+            guard parent.sections[safe: indexPath.section]?.dataSource.canDragItem(for: indexPath) ?? false else { return [] }
             
 			guard let dragItem = parent.sections[safe: indexPath.section]?.dataSource.getDragItem(for: indexPath) else { return [] }
 			return [dragItem]

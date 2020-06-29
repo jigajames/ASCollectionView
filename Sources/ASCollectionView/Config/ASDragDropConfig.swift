@@ -22,4 +22,7 @@ public struct ASDragDropConfig<Data>
 	/// `sourceItem`: If the drop originated from a cell with the same data source, this will provide the original item that has been dragged
 	/// `dragItem`: This is the further information provided by UIKit. For example, if a drag came from another app, you could deal with that using this.
 	var dropItemProvider: ((_ sourceItem: Data?, _ dragItem: UIDragItem) -> Data?)?
+    
+    var canDragItem: ((_ indexPath: IndexPath) -> Bool)?
+    var canDropHere: ((_ indexPath: IndexPath) -> Bool)?
 }
