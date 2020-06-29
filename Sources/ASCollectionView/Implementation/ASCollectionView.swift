@@ -705,6 +705,9 @@ public struct ASCollectionView<SectionID: Hashable>: UIViewControllerRepresentab
 		func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem]
 		{
 			guard !indexPath.isEmpty else { return [] }
+            
+            print("itemsForBeginning session")
+            
 			guard let dragItem = parent.sections[safe: indexPath.section]?.dataSource.getDragItem(for: indexPath) else { return [] }
 			return [dragItem]
 		}
